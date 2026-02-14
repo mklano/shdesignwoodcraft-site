@@ -2,18 +2,134 @@
 import { getEntry } from "astro:content";
 
 const page = await getEntry("pages", "index");
-const { Content } = await page.render();
+if (!page) throw new Error("Home page (pages/index) not found");
+
+const { title, seoDescription, sections = [] } = page.data;
 ---
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{page.data.title}</title>
-    {page.data.seoDescription && (
-      <meta name="description" content={page.data.seoDescription} />
-    )}
+    <title>{title}</title>
+    {seoDescription && <meta name="description" content={seoDescription} />}
   </head>
-  <body>
-    <Content />
+
+  <body class="min-h-screen bg-white text-neutral-900">
+    <main class="mx-auto max-w-5xl px-6 py-12">
+      {
+        sections.map((section) => {
+          switch (section.type) {
+            case "Hero":
+              return (
+                <section class="mb-14">
+                  <h1 class="text-5xl font-semibold tracking-tight">
+                    {section.headline}
+                  </h1>
+                  {section.subheadline && (
+                    <p class="mt-5 text-lg text-neutral-700">
+                      {section.subheadline}
+                    </p>
+                  )}
+                  {section.buttonText && section.buttonLink && (
+                    <a
+                      href={section.buttonLink}
+                      class="mt-7 inline-flex items-center rounded-xl border border-neutral-900 px-5 py-3 text-sm font-medium hover:bg-neutral-900 hover:text-white transition"
+                    >
+                      {section.buttonText}
+                    </a>
+                  )}
+                </section>
+              );
+
+            case "Services":
+              return (
+                <section class="mb-14">
+                  {section.heading && (
+                    <h2 class="text-2xl font-semibold">{section.heading}</h2>
+                  )}
+                  <div class="mt-6 grid gap-6 md:grid-cols-3">
+                    {(section.items ?? []).map((item) => (
+                      <div class="rounded-2xl border border-neutral-200 p-6">
+                        <h3 class="text-lg font-semibold">{item.title}</h3>
+                        {item.description && (
+                          <p class="mt-3 text-sm text-neutral-700">
+                            {item.description}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              );
+
+            case "Gallery":
+              return (
+                <section class="mb-14">
+                  {section.heading && (
+                    <h2 class="text-2xl font-semibold">{section.heading}</h2>
+                  )}
+                  <div class="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+                    {(section.images ?? []).map((img) => (
+                      <figure class="overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50">
+                        {/* Stackbit images usually provide url + alt */}
+                        <img
+                          src={img.url}
+                          alt={img.alt ?? ""}
+                          class="h-56 w-full object-cover"
+                          loading="lazy"
+                        />
+                      </figure>
+                    ))}
+                  </div>
+                </section>
+              );
+
+            case "Testimonials":
+              return (
+                <section class="mb-14">
+                  {section.heading && (
+                    <h2 class="text-2xl font-semibold">{section.heading}</h2>
+                  )}
+                  <div class="mt-6 grid gap-6 md:grid-cols-2">
+                    {(section.items ?? []).map((t) => (
+                      <figure class="rounded-2xl border border-neutral-200 p-6">
+                        <blockquote class="text-neutral-800">
+                          “{t.quote}”
+                        </blockquote>
+                        {t.author && (
+                          <figcaption class="mt-4 text-sm font-medium text-neutral-700">
+                            — {t.author}
+                          </figcaption>
+                        )}
+                      </figure>
+                    ))}
+                  </div>
+                </section>
+              );
+
+            case "CTA":
+              return (
+                <section class="rounded-2xl border border-neutral-200 p-8">
+                  {section.text && (
+                    <p class="text-lg font-semibold">{section.text}</p>
+                  )}
+                  {section.buttonText && section.buttonLink && (
+                    <a
+                      href={section.buttonLink}
+                      class="mt-5 inline-flex items-center rounded-xl bg-neutral-900 px-5 py-3 text-sm font-medium text-white hover:opacity-90 transition"
+                    >
+                      {section.buttonText}
+                    </a>
+                  )}
+                </section>
+              );
+
+            default:
+              return null;
+          }
+        })
+      }
+    </main>
   </body>
 </html>
