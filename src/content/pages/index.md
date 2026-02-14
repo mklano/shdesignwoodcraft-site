@@ -1,6 +1,5 @@
 ---
 title: "Home"
-slug: "index"
 seoDescription: "Custom cabinetry and full kitchen renovations in the Nashville area."
 ---
 
