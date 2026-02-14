@@ -9,10 +9,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
     server: {
       host: true,
-      allowedHosts: [
-        "devserver-preview--shdesignwoodcraft.netlify.app",
-        "devserver-main--shdesignwoodcraft.netlify.app"
-      ]
+      allowedHosts: true,
     }
   },
   integrations: [react()],
