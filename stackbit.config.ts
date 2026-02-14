@@ -3,7 +3,7 @@ models: [
     name: "Home",
     type: "page",
     urlPath: "/",
-    filePath: "src/content/pages/home.md",
+    filePath: "src/content/pages/index.md",
     fields: [
       { name: "title", type: "string", required: true },
       { name: "seoDescription", type: "string" },
