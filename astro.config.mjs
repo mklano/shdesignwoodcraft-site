@@ -3,13 +3,16 @@ import netlify from '@astrojs/netlify';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
-// https://astro.build/config
 export default defineConfig({
+  server: {
+    port: 3000,
+    host: true
+  },
   vite: {
     plugins: [tailwindcss()],
     server: {
       host: true,
-      allowedHosts: true,
+      allowedHosts: true
     }
   },
   integrations: [react()],
