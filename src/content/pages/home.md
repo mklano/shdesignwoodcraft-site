@@ -1,6 +1,6 @@
 ---
 title: "Home"
-slug: ""
+slug: "home"
 seoDescription: "Spring Hill Design & Woodcraft — custom cabinetry and full kitchen remodels."
 ---
 
