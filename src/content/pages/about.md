@@ -1,9 +1,7 @@
 ---
-title: "About"
+type: Page
+title: "About Us"
 slug: "about"
-seoDescription: "About Spring Hill Design & Woodcraft."
+seoDescription: "About Spring Hill Design and Woodcraft."
 ---
-
-# About
-
-We provide design, cabinetry, and construction under one roof.
+Your about page content here...
