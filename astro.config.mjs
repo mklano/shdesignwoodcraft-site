@@ -7,7 +7,11 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     server: {
-      allowedHosts: true
+      host: true,
+      allowedHosts: [
+        'devserver-main--shdesignwoodcraft.netlify.app',
+        '.netlify.app'
+      ]
     }
   },
   integrations: [react()],
